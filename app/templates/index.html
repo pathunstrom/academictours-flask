@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section id="feature" class="clear">
+      <img src="static/images/MaltaBayWithArmor.jpg">
+      <div>
+      <h1 id="feature-title">Malta-Sicily Delight</h1>
+      <p id="feature-description">Our star tour. Visit Malta and Sicily with our hand crafted tours.</p>
+      </div>
+    </section>
+
+    <div id="content-wrap" class="clearfix">
+      <div id="right-wrap" class="clearfix">
+        <section id="about">
+          <header><h2>About</h2></header>
+          <p>Founded in 1984, Academic Tours and Travel is a leading specialist in travel to Malta and Sicily. They also are home to experts in many European destinations including Italy and Romania.</p>
+        </section>
+
+        <section id="pledge">
+          <header><h2>Our Pledge</h2></header>
+          <p><em>"From Concept to Completion"</em></p>
+          <p>Our agents will work with you from the first idea until you pick you unpack. If we ever recieve complaints from a local provider they are investigated and blacklisted for at least a year.</p>
+        </section>
+        <a href="{{ url_for('regions') }}">
+        <div id="call" class="clear">
+          <h1>Browse our Destinations</h1>
+        </div>
+        </a>
+      </div>
+
+      <section id="contact">
+        <header><h2>Contact an Agent</h2></header>
+        <form>
+          <label>Name: <input type="text" name="name" placeholder="Jane Doe" required="true" /></label><br />
+          <label>Email: <input type="text" name="email" placeholder="example@mail.com" required="true" /></label><br />
+          <label>Phone Number:<input type="text" name="phone" placeholder="7186903055" required="true" /></label><br />
+          <label>What's your dream vacation? <textarea name="destination" placeholder="Sample text" required></textarea></label><br />
+          <button type="submit">Send</button>
+          <button type="reset">Reset</button>
+        </form>
+      </section>
+    </div>
+{% endblock %}

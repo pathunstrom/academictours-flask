@@ -1,0 +1,31 @@
+.destination {
+  margin: 1% 1.5%;
+}
+
+@media screen and (min-width: 450px) {
+  .destination {
+    min-width: 47%;
+    float: left;
+  }
+
+  .destination:first-child {
+    float: none;
+  }
+
+  .destination:nth-child(even) {
+    margin-right: 1.5%;
+  }
+}
+
+@media screen and (min-width: 600px ) {
+  p {
+    font-size: 1.6em;
+  }
+
+  #feature h2 {
+    float: left;
+    font-size: 4em;
+    width: 30%;
+    margin: 1em;
+  }
+}

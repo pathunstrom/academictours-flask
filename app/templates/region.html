@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div id="content" class="clearfix">
+    <section>
+      <h1>{{ title }}</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed tortor id felis mollis cursus at sed elit. Nunc volutpat augue augue, sed aliquet nisi dapibus sed. Sed dapibus orci id elit facilisis dignissim. Aliquam vulputate leo non egestas pulvinar.</p>
+    </section>
+    <div id="destinations">
+      {% for d in destinations -%}
+        <div {% if d['featured'] %}id="feature" {% endif %}class="destination clearfix"><a href="{{ url_for('destination_page', location=d.name) }}">
+        <img src="/static/images/logo.png" height="40" width="40">
+        <h2>{{ d["name"] }}</h2>
+        <p>{{ d["copy"] }}</p>
+      </a></div>
+    {% endfor -%}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+#feature {
+  position: relative;
+  max-height: 310px;
+  overflow: hidden;
+}
+
+#feature div {
+  width: 77.5%;
+  margin: auto;
+  position: absolute;
+  left: 11.25%;
+  bottom: 3.8461%;
+  background-color: rgba(64, 64, 64, 0.5);
+  color: #E0FEE0;
+  border-radius: 5px;
+}
+
+#feature img {
+  max-width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  p {
+    font-size: 1.6em;
+  }
+
+  .destination h2 {
+    float: left;
+    font-size: 4em;
+    width: 30%;
+    margin: 1em;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  #feature {
+    max-width: 600px;
+    margin: auto;
+    font-size: 1.6em;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  #feature {
+    max-width: 100%;
+    width: 83.3333%;
+    position: relative;
+    top: -2px;
+  }
+}

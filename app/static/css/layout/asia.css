@@ -1,0 +1,12 @@
+@media screen and (min-width: 600px) {
+  p {
+    font-size: 1.6em;
+  }
+
+  .destination h2 {
+    float: left;
+    font-size: 4em;
+    width: 30%;
+    margin: 1em;
+  }
+}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div id="top-wrap" class="clearfix">
+    <a href="{{ url_for('region', location='Mediterranean') }}"><div id="mediterranean" class="destination clearfix">
+      <img src="static/images/logo.png" height="40" width="40">
+      <h2>Mediterranean</h2>
+      <p>History and beauty of our Mediterranean locales: Malta, Sicily, Italy, Sardinia and Tunisia.</p>
+    </div></a>
+    <section id="packages">
+      <h1>Selected Tours</h1>
+      <p>Our travel experts have designed tours ready to book to some of the greatest destinations in the Mediterraenean and Southern Asia.</p>
+      <p>Empty filler text. Here to take up room so we can see what things look like. This is important, of course.</p>
+    </section>
+    <a href="{{ url_for('region', location='Asia') }}"><div id="asia" class="destination clearfix">
+      <img src="static/images/logo.png" height="40" width="40">
+      <h2>Southern Asia</h2>
+      <p>Bhutan and Nepal</p>
+    </div></a>
+  </div>
+
+  <div id="bottom-wrap" class="clearfix">
+    <section id="custom">
+      <h1>Custom Tours</h1>
+      <p>Have an idea for a dream vacation? Let us help.</p>
+      <p>Set aside your worries and let our experts guide you in making memories. They have decades of experience planning perfect trips with first hand knowledge of Europe and Asia.</p>
+    </section>
+    <section id="contact">
+      <header><h2>Contact an Agent</h2></header>
+      <form>
+        <label>Name: <input type="text" name="name" placeholder="Jane Doe" required="true" /></label><br />
+        <label>Email: <input type="text" name="email" placeholder="example@mail.com" required="true" /></label><br />
+        <label>Phone Number:<input type="text" name="phone" placeholder="7186903055" required="true" /></label><br />
+        <label>What's your dream vacation? <textarea name="destination" placeholder="Sample text" required></textarea></label><br />
+        <button type="submit">Send</button>
+        <button type="reset">Reset</button>
+      </form>
+    </section>
+  </div>
+{% endblock %}

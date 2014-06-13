@@ -1,0 +1,84 @@
+#feature {
+  position: relative;
+  max-height: 310px;
+  overflow: hidden;
+}
+
+#feature div {
+  width: 77.5%;
+  margin: auto;
+  position: absolute;
+  left: 11.25%;
+  bottom: 3.8461%;
+  background-color: rgba(64, 64, 64, 0.5);
+  color: #E0FEE0;
+  border-radius: 5px;
+}
+
+#feature img {
+  max-width: 100%;
+}
+
+ol {
+  list-style-type: none;
+}
+
+table {
+  width: 90%;
+  margin: auto;
+  font-size: 1.6em;
+  margin-bottom: 1em;
+}
+
+td {
+  text-align: right;
+}
+
+#body {
+  position: relative;
+}
+
+@media screen and (min-width: 600px) {
+  table {
+    margin-left: 1em;
+    float: left;
+    width: 45%
+  }
+
+  #contact {
+    margin-right: 1em;
+    float: right;
+    width: 48%;
+  }
+
+  #feature {
+    max-width: 600px;
+    margin: auto;
+    font-size: 1.6em;
+  }
+
+}
+
+@media screen and (min-width: 750px) {
+  table, #contact {
+    float: none;
+    max-width: 50%;
+  }
+
+  table, #contact, #copy {
+    max-width: 50%;
+  }
+
+  ol {
+    position: absolute;
+    left: 52.5%;
+    top: 1em;
+  }
+
+  #feature {
+    max-width: 100%;
+    width: 83.3333%;
+    position: relative;
+    top: -2px;
+  }
+}

@@ -1,0 +1,41 @@
+#top-wrap, #bottom-wrap {
+  padding: .5em;
+}
+
+
+@media screen and (min-width: 470px) {
+  .destination p, section p {
+    font-size: 1.6em;
+  }
+
+  .destination {
+    float: left;
+    width: 45%;
+  }
+
+  #packages {
+    float: right;
+    width: 50%;
+  }
+
+  #custom {
+    float: left;
+    width: 50%;
+  }
+
+  #contact {
+    float: right;
+    width: 45%;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .destination, #custom {
+    width: 65%;
+  }
+
+  #packages, #contact {
+    width: 30%;
+  }
+  
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% if title %}{{title}} &mdash; {% endif -%}Academic Tours and Travel</title>
+    <meta name="description" content="Home page of Academic Tours and Travel: From concept to completion." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/layout/{{ layout }}.css" />
+  </head>
+  <body>
+    <header id="page-head" class="clearfix">
+      <div id="logo"><img src="/static/images/logo.png" height="40" width="40"></div>
+      <a href="{{ url_for('home') }}"><h1>Academic Tours and Travel</h1></a>
+      <nav>
+        <ul class="clearfix">
+          <li><a href="{{ url_for('regions') }}"><div>Travel With Us</div></a></li>
+          <li><a href="#"><div>Sign In</div></a></li>
+        </ul>
+      </nav>
+    </header>
+    {% block content %}{% endblock %}
+    <figure>
+      <blockquote>{{ referral[0] }}</blockquote>
+      <figcaption>- {{ referral[1] }}</figcaption>
+    </figure>
+
+    <footer class="clearfix">
+      <div class="clearfix">
+        <p>Academic Tours and Travel, LLC (718) 690-3055<p>
+        <p>Designed by Patrick Thunstrom</p>
+      </div>
+    </footer>
+  </body>
+</html>
