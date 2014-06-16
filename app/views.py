@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, url_for
 
+
 @app.route('/')
 def home():
     return render_template("index.html",
@@ -27,23 +28,45 @@ def region(location):
 
 @app.route('/destination/<location>')
 def destination_page(location):
-    return "This is the {} destination page.".format(location)
+    body = """<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Curabitur arcu tellus, condimentum at mauris porta, sodales
+              placerat orci. Aenean lacinia aliquam ultricies. In ultricies
+              bibendum nisl a rhoncus. Morbi tempus eros eu urna tincidunt
+              dapibus. Nam tempor, nisl at sodales adipiscing, elit arcu
+              vehicula arcu, et vulputate nunc lorem quis dolor. Ut porta
+              auctor ultricies. Ut nec ante porttitor, aliquam est ut,
+              placerat turpis. Sed posuere orci id dui varius, id rhoncus
+              felis varius. Nam suscipit lorem eget ligula vulputate, sed
+              interdum odio sagittis.</p>
+              <p>Cras id magna vitae velit placerat scelerisque id id diam.
+              Sed hendrerit faucibus nisl eu lobortis. Praesent accumsan
+              pellentesque nunc a pellentesque. In hac habitasse platea
+              dictumst. Morbi et viverra enim. Donec tempus orci et ipsum
+              mattis, vitae posuere urna tempus. Nam iaculis rhoncus augue, in
+              tincidunt nisl mattis vitae. Suspendisse pretium urna nec
+              tristique mattis. Mauris mollis nisi at sem sodales, at tincidunt
+              libero aliquet. Nullam vitae feugiat nibh.</p>
+           """
+    return render_template("destination.html",
+                           title="{}".format(location),
+                           body=body,
+                           layout="destination",
+                           referral=get_referral(),
+                           tours=get_tours(location))
 
 
 @app.route('/tour/<tour>')
 def tour_page(tour):
-    return "This is the {} tour page.".format(tour)
+    return render_template("tour.html",
+                           layout="tour",
+                           tour=get_tour(0),
+                           referral=get_referral())
 
 
-@app.route('/contact/', methods=["POST"])
+@app.route('/contact', methods=["POST"])
 def handle_contact_form():
     return "This is not yet functioning."
 
-
-def get_referral():
-    referral = "This is a referral from an existing customer."
-    customer = "John Doe"
-    return referral, customer
 
 
 def get_destinations(location):
@@ -64,3 +87,46 @@ def get_destinations(location):
                  'featured': False},
                 {'name': "Nepal", "copy": "Nepal sales copy.",
                  'featured': False}]
+
+
+def get_referral():
+    referral = "This is a referral from an existing customer."
+    customer = "John Doe"
+    return referral, customer
+
+
+def get_tours(location):
+    return [{"name": "Tour " + str(x),
+             "copy": "Copy for Tour " + str(x)} for x in xrange(1,4)]
+
+
+def get_destination():
+    pass
+
+
+def get_tour(tour_id):
+    name = "Test Tour"
+    copy = """
+    <p>This section is for descriptions of the tour.</p>
+    <p>Key highlights, sales copy, that sort of thing.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Curabitur arcu tellus, condimentum at mauris porta, sodales placerat orci.
+    Aenean lacinia aliquam ultricies. In ultricies bibendum nisl a rhoncus.
+    Morbi tempus eros eu urna tincidunt dapibus. Nam tempor, nisl at sodales
+    adipiscing, elit arcu vehicula arcu, et vulputate nunc lorem quis dolor.
+    Ut porta auctor ultricies. Ut nec ante porttitor, aliquam est ut,
+    placerat turpis. Sed posuere orci id dui varius, id rhoncus felis varius.
+    Nam suscipit lorem eget ligula vulputate, sed interdum odio sagittis.</p>
+    """
+    return {"name": name, "copy": copy, "itinerary": get_itinerary(1)}
+
+
+def get_itinerary(key):
+    return [{"number": 1, "summary": "Day one summary",
+             "landmarks": get_landmarks(0)},
+            {"number": 2, "summary": "Day two summary",
+             "landmarks": get_landmarks(0)}]
+
+
+def get_landmarks(key):
+    return [{"name": "Landmark", "copy": "Landmark copy"} for x in range(2)]

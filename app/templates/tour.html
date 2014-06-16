@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="feature" class="clear">
+      <img src="/static/images/MaltaBayWithArmor.jpg">
+      <div>
+        <h1 id="title">{{ tour["name"] }}</h1>
+      </div>
+    </section>
+    <div id="body">
+      <section id="copy">
+        {{ tour["copy"]|safe }}
+      </section>
+
+      <section id="itinerary">
+        <ol>
+          {% for day in tour["itinerary"] %}
+          <li>
+            <h1>Day {{ day['number'] }}</h1>
+            <p>{{ day['summary'] }}</p>
+            {% for landmark in day['landmarks'] %}
+            <h2>{{ landmark['name'] }}</h2>
+            <p>{{ landmark['copy'] }}</p>
+            {% endfor %}
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <div class="clearfix">
+        <table border="1" summary="Tour Pricing">
+          <caption>Prices</caption>
+          <tr>
+            <th>July</th>
+            <td>$1500</td>
+          </tr>
+          <tr>
+            <th>August</th>
+            <td>$1000</td>
+          </tr>
+          <tr>
+            <th>September</th>
+            <td>$900</td>
+          </tr>
+          <tfoot>All prices based on double or twin occupancy. Single supplement available upon request.</tfoot>
+        </table>
+
+        <section id="contact">
+          <header><h2>Contact an Agent</h2></header>
+          <form>
+            <label>Name: <input type="text" name="name" placeholder="Jane Doe" required="true" /></label><br />
+            <label>Email: <input type="text" name="email" placeholder="example@mail.com" required="true" /></label><br />
+            <label>Phone Number:<input type="text" name="phone" placeholder="7186903055" required="true" /></label><br />
+            <label>What's your dream vacation? <textarea name="destination" placeholder="Sample text" required></textarea></label><br />
+            <button type="submit">Send</button>
+            <button type="reset">Reset</button>
+          </form>
+        </section>
+      </div>
+    </div>
+{% endblock %}

@@ -79,7 +79,8 @@ section p {
   }
 
   #contact {
-    width: 30%;
+    width: 34%;
+    padding: 1em;
   }
 
   #content-wrap {
@@ -98,6 +99,7 @@ section p {
     width: 65%;
     height: 100%;
     float: right;
+    padding: 1em;
   }
 
   #call {

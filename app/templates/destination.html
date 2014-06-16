@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="feature" class="clear">
+  <img src="/static/images/MaltaBayWithArmor.jpg">
+  <div>
+    <h1 id="title">{{ title }}</h1>
+  </div>
+</section>
+
+<section id="body">{{ body|safe }}</section>
+
+<section id="tours">
+  {% for tour in tours %}
+  <div class="destination clearfix"><a href="{{ url_for('tour_page', tour=title + ' ' + tour.name) }}">
+    <img src="/static/images/logo.png" height="40" width="40">
+    <h2>{{ tour["name"] }}</h2>
+    <p>{{ tour["copy"] }}</p>
+  </a></div>
+  {% endfor %}
+</section>
+{% endblock %}
