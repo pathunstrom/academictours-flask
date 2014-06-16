@@ -1,3 +1,7 @@
+#disclaimer {
+  text-align: center;
+}
+
 #feature {
   position: relative;
   max-height: 310px;
@@ -17,10 +21,6 @@
 
 #feature img {
   max-width: 100%;
-}
-
-ol {
-  list-style-type: none;
 }
 
 table {
@@ -60,6 +60,10 @@ td {
 }
 
 @media screen and (min-width: 750px) {
+  #contact {
+    margin-left: 1em;
+  }
+
   table, #contact {
     float: none;
     max-width: 50%;
@@ -69,10 +73,11 @@ td {
     max-width: 50%;
   }
 
-  ol {
+  #itinerary {
     position: absolute;
     left: 52.5%;
     top: 1em;
+    width: 45%;
   }
 
   #feature {

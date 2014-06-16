@@ -17,7 +17,7 @@ a {
 figure {
   font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
   font-size: 1.8em;
-  max-width: 80%;
+  max-width: 100%;
   margin: auto;
   padding: 2em;
 }
@@ -177,6 +177,10 @@ textarea {
 }
 
 @media screen and (min-width: 650px) {
+  figure {
+    max-width: 80%;
+  }
+
   #page-head {
     height: 60px;
   }

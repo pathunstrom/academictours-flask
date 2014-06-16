@@ -1,0 +1,15 @@
+{% extends parent %}
+
+{% block contact %}
+<section id="contact">
+  <header><h2>Contact an Agent</h2></header>
+  <form action="/contact/" method="post">
+    <label>Name: <input type="text" name="name" placeholder="Jane Doe" required="true" /></label><br />
+    <label>Email: <input type="text" name="email" placeholder="example@mail.com" required="true" /></label><br />
+    <label>Phone Number:<input type="text" name="phone" placeholder="7186903055" required="true" /></label><br />
+    <label>What's your dream vacation? <textarea name="destination" placeholder="Sample text" required></textarea></label><br />
+    <button type="submit">Send</button>
+    <button type="reset">Reset</button>
+  </form>
+</section>
+{% endblock %}

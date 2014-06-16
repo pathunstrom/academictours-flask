@@ -1,23 +1,32 @@
 from app import app
-from flask import render_template, url_for
+from flask import render_template
+from model import tours, copy
 
 
 @app.route('/')
 def home():
-    return render_template("index.html",
+    return render_template("contact.html",
+                           parent="index.html",
                            layout="index",
+                           featured_tour=get_tours(featured=True)[0],
+                           pledge=get_copy("pledge"),
+                           about=get_copy("about"),
                            referral=get_referral())
 
 
-@app.route('/regions')
+@app.route('/regions/')
 def regions():
-    return render_template("regions.html",
+    return render_template("contact.html",
+                           parent="regions.html",
                            title="Our Regions",
                            layout="region",
+                           regions=get_regions(),
+                           selected_tours=get_copy("selected tours"),
+                           custom_tours=get_copy("custom tours"),
                            referral=get_referral())
 
 
-@app.route('/region/<location>')
+@app.route('/region/<location>/')
 def region(location):
     return render_template("region.html",
                            title="{} Destinations".format(location),
@@ -26,7 +35,7 @@ def region(location):
                            destinations=get_destinations(location))
 
 
-@app.route('/destination/<location>')
+@app.route('/destination/<location>/')
 def destination_page(location):
     body = """<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Curabitur arcu tellus, condimentum at mauris porta, sodales
@@ -55,20 +64,58 @@ def destination_page(location):
                            tours=get_tours(location))
 
 
-@app.route('/tour/<tour>')
+@app.route('/tour/<tour>/')
 def tour_page(tour):
-    return render_template("tour.html",
+    return render_template("contact.html",
+                           parent="tour.html",
                            layout="tour",
                            tour=get_tour(0),
                            referral=get_referral())
 
 
-@app.route('/contact', methods=["POST"])
+@app.route('/contact/', methods=["POST"])
 def handle_contact_form():
     return "This is not yet functioning."
 
 
+def get_copy(name):
+    v = None
+    for i in copy:
+        if i['name'] == name:
+            v = i
 
+    return v
+
+
+def get_referral():
+    referral = "This is a referral from an existing customer."
+    customer = "John Doe"
+    return referral, customer
+
+
+def get_regions():
+    return [{"name": "test", "summary": "test summary"},
+            {"name": "test", "summary": "test summary"}]
+
+
+def get_tours(destination=None, featured=False):
+    matching_tours = []
+    if destination:
+        for tour in tours:
+            if tour["destination_id"] == destination:
+                matching_tours.append(tour)
+    elif featured:
+        for tour in tours:
+            if tour["featured"]:
+                matching_tours.append(tour)
+                break
+    else:
+        raise IndexError
+
+    return matching_tours
+
+
+# Unfinished or temporary functions for development
 def get_destinations(location):
     location = location.encode('utf-8')
     if location.lower() == "mediterranean":
@@ -87,17 +134,6 @@ def get_destinations(location):
                  'featured': False},
                 {'name': "Nepal", "copy": "Nepal sales copy.",
                  'featured': False}]
-
-
-def get_referral():
-    referral = "This is a referral from an existing customer."
-    customer = "John Doe"
-    return referral, customer
-
-
-def get_tours(location):
-    return [{"name": "Tour " + str(x),
-             "copy": "Copy for Tour " + str(x)} for x in xrange(1,4)]
 
 
 def get_destination():
