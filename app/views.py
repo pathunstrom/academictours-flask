@@ -1,7 +1,13 @@
 from app import app
+import config
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
 from flask import render_template
+from flask import request
 import model
 from operator import itemgetter
+from random import choice
+import smtplib
 
 
 @app.route('/')
@@ -63,17 +69,52 @@ def tour_page(tour):
 
 @app.route('/contact/', methods=["POST"])
 def handle_contact_form():
-    return "This is not yet functioning."
+    print request.form
+    from_address = config.server_email
+    to_address = config.contact_email
+    msg = MIMEMultipart()
+    msg['From'] = from_address
+    msg['To'] = to_address
+    msg['Subject'] = "A new client for Academic Tours"
+    body = """
+           Mr. Boden,
+
+           {name} just contacted you via your website contact form.
+
+           You can reach them at {email} or {phone}.
+
+           They said their dream vacation was:
+
+           {vacation}
+           """.format(name=request.form["name"],
+                      email=request.form["email"],
+                      phone=request.form["phone"],
+                      vacation=request.form["destination"])
+    msg.attach(MIMEText(body, 'plain'))
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login(config.smtp_username, config.smtp_password)
+    text = msg.as_string()
+    server.sendmail(from_address, to_address, text)
+    return render_template("thankyou.html",
+                           referral=get_referral(),
+                           layout="thankyou",
+                           name=request.form["name"])
 
 
 @app.route('/login/', methods=["GET", "POST"])
 def login_page():
-    return "This is not yet functioning."
+    return render_template("null.html",
+                           referral=get_referral())
 
 
 @app.route('/admin/')
 def admin_page():
-    return "This is not yet functioning."
+    return render_template("null.html",
+                           referral=get_referral())
 
 
 def get_copy(name):
@@ -140,8 +181,9 @@ def get_prices(tour):
 
 
 def get_referral():
-    referral = "This is a referral from an existing customer."
-    customer = "John Doe"
+    value = choice(model.referrals)
+    referral = value["referral"]
+    customer = value["name"]
     return referral, customer
 
 

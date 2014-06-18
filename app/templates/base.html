@@ -6,7 +6,7 @@
     <meta name="description" content="Home page of Academic Tours and Travel: From concept to completion." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/layout/{{ layout }}.css" />
+    {% if layout %}<link rel="stylesheet" type="text/css" href="/static/css/layout/{{ layout }}.css" />{% endif -%}
   </head>
   <body>
     <header id="page-head" class="clearfix">

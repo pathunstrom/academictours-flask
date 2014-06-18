@@ -1,3 +1,4 @@
+import referrals
 import tour
 
 
@@ -104,3 +105,4 @@ tours = tour.tours
 days = tour.days
 day_landmark = tour.landmark_relations
 prices = tour.prices
+referrals = referrals.referrals
