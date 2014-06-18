@@ -2,11 +2,11 @@
 
 {% block content %}
     <section id="feature" class="clear">
-      <img src="static/images/MaltaBayWithArmor.jpg">
-      <div>
+      <img src="static/images/{{ featured_tour['banner_image'] }}">
+      <a href="{{ url_for('tour_page', tour=featured_tour['name']) }}"><div>
       <h1 id="feature-title">{{ featured_tour["name"] }}</h1>
       <p id="feature-description">{{ featured_tour["summary"] }}</p>
-      </div>
+      </div></a>
     </section>
 
     <div id="content-wrap" class="clearfix">
@@ -20,7 +20,7 @@
           <header><h2>Our Pledge</h2></header>
           {{ pledge["value"]|safe }}
         </section>
-        <a href="{{ url_for('regions') }}">
+        <a href="{{ url_for('regions_page') }}">
         <div id="call" class="clear">
           <h1>Browse our Destinations</h1>
         </div>

@@ -4,14 +4,14 @@
   <div id="content" class="clearfix">
     <section>
       <h1>{{ region["name"] }}</h1>
-      {{ region["copy"] }}
+      {{ region["copy"]|safe }}
     </section>
     <div id="destinations">
       {% for d in region["destinations"] -%}
         <div {% if d['featured'] %}id="feature" {% endif %}class="destination clearfix"><a href="{{ url_for('destination_page', location=d.name) }}">
-        <img src="/static/images/logo.png" height="40" width="40">
+        <img src="/static/images/{{ d['thumbnail'] }}">
         <h2>{{ d["name"] }}</h2>
-        <p>{{ d["copy"] }}</p>
+        <p>{{ d["summary"] }}</p>
       </a></div>
     {% endfor -%}
     </div>

@@ -2,8 +2,8 @@
 
 {% block content %}
   <div id="top-wrap" class="clearfix">
-    <a href="{{ url_for('region', location='Mediterranean') }}"><div id="mediterranean" class="destination clearfix">
-      <img src="/static/images/logo.png" height="40" width="40">
+    <a href="{{ url_for('region_page', location=regions[0]['name']) }}"><div id="mediterranean" class="destination clearfix">
+      <img src="/static/images/{{ regions[0]['thumbnail'] }}">
       <h2>{{ regions[0]["name"] }}</h2>
       <p>{{ regions[0]["summary"] }}</p>
     </div></a>
@@ -11,8 +11,8 @@
       <h1>Selected Tours</h1>
       {{ selected_tours["value"]|safe }}
     </section>
-    <a href="{{ url_for('region', location='Asia') }}"><div id="asia" class="destination clearfix">
-      <img src="/static/images/logo.png" height="40" width="40">
+    <a href="{{ url_for('region_page', location=regions[1]['name']) }}"><div id="asia" class="destination clearfix">
+      <img src="/static/images/{{ regions[1]['thumbnail'] }}">
       <h2>{{ regions[1]["name"] }}</h2>
       <p>{{ regions[1]["summary"] }}</p>
     </div></a>

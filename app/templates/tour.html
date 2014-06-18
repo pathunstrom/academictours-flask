@@ -2,7 +2,7 @@
 
 {% block content %}
 <section id="feature" class="clear">
-      <img src="/static/images/MaltaBayWithArmor.jpg">
+      <img src="/static/images/{{ tour['banner_image']}}">
       <div>
         <h1 id="title">{{ tour["name"] }}</h1>
       </div>
@@ -14,11 +14,11 @@
 
       <section id="itinerary">
           {% for day in tour["itinerary"] %}
-            <h1>Day {{ day['number'] }}</h1>
+            <h1>Day {{ day['day'] }}</h1>
             <p>{{ day['summary'] }}</p>
             {% for landmark in day['landmarks'] %}
             <h2>{{ landmark['name'] }}</h2>
-            <p>{{ landmark['copy'] }}</p>
+            <p>{{ landmark['summary'] }}</p>
             {% endfor %}
           {% endfor %}
       </section>
@@ -28,8 +28,8 @@
           <caption>Prices</caption>
           {% for p in tour["prices"] %}
           <tr>
-            <th>p["month"]</th>
-            <td>p["price"]</td>
+            <th>{{ p["name"] }}</th>
+            <td>$ {{ p["price"] }}</td>
           </tr>
           {% endfor -%}
           <tr><td id="disclaimer" colspan="2">All prices based on double or twin occupancy. Single supplement available upon request.</td></tr>

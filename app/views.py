@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template
-from model import tours, copy
+import model
+from operator import itemgetter
 
 
 @app.route('/')
@@ -15,7 +16,7 @@ def home():
 
 
 @app.route('/regions/')
-def regions():
+def regions_page():
     return render_template("contact.html",
                            parent="regions.html",
                            title="Our Regions",
@@ -27,49 +28,36 @@ def regions():
 
 
 @app.route('/region/<location>/')
-def region(location):
+def region_page(location):
+    region = get_regions(location)
+    region["destinations"] = get_destinations(region=region["name"])
     return render_template("region.html",
                            title="{} Destinations".format(location),
                            layout=location.lower(),
                            referral=get_referral(),
-                           destinations=get_destinations(location))
+                           region=region)
 
 
 @app.route('/destination/<location>/')
 def destination_page(location):
-    body = """<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Curabitur arcu tellus, condimentum at mauris porta, sodales
-              placerat orci. Aenean lacinia aliquam ultricies. In ultricies
-              bibendum nisl a rhoncus. Morbi tempus eros eu urna tincidunt
-              dapibus. Nam tempor, nisl at sodales adipiscing, elit arcu
-              vehicula arcu, et vulputate nunc lorem quis dolor. Ut porta
-              auctor ultricies. Ut nec ante porttitor, aliquam est ut,
-              placerat turpis. Sed posuere orci id dui varius, id rhoncus
-              felis varius. Nam suscipit lorem eget ligula vulputate, sed
-              interdum odio sagittis.</p>
-              <p>Cras id magna vitae velit placerat scelerisque id id diam.
-              Sed hendrerit faucibus nisl eu lobortis. Praesent accumsan
-              pellentesque nunc a pellentesque. In hac habitasse platea
-              dictumst. Morbi et viverra enim. Donec tempus orci et ipsum
-              mattis, vitae posuere urna tempus. Nam iaculis rhoncus augue, in
-              tincidunt nisl mattis vitae. Suspendisse pretium urna nec
-              tristique mattis. Mauris mollis nisi at sem sodales, at tincidunt
-              libero aliquet. Nullam vitae feugiat nibh.</p>
-           """
+    destination = get_destinations(name=location)[0]
+    destination["tours"] = get_tours(destination=destination["name"])
     return render_template("destination.html",
                            title="{}".format(location),
-                           body=body,
                            layout="destination",
                            referral=get_referral(),
-                           tours=get_tours(location))
+                           destination=destination)
 
 
 @app.route('/tour/<tour>/')
 def tour_page(tour):
+    tour = get_tours(name=tour.encode('utf-8'))[0]
+    tour['itinerary'] = get_itinerary(tour["name"])
+    tour['prices'] = get_prices(tour["name"])
     return render_template("contact.html",
                            parent="tour.html",
                            layout="tour",
-                           tour=get_tour(0),
+                           tour=tour,
                            referral=get_referral())
 
 
@@ -78,13 +66,77 @@ def handle_contact_form():
     return "This is not yet functioning."
 
 
-def get_copy(name):
-    v = None
-    for i in copy:
-        if i['name'] == name:
-            v = i
+@app.route('/login/', methods=["GET", "POST"])
+def login_page():
+    return "This is not yet functioning."
 
-    return v
+
+@app.route('/admin/')
+def admin_page():
+    return "This is not yet functioning."
+
+
+def get_copy(name):
+    value = None
+    for index in model.copy:
+        if index['name'] == name:
+            value = index
+
+    return value
+
+
+def get_destinations(name=None, region=None):
+    value = []
+
+    if region:
+        location = region.encode('utf-8')
+        for destination in model.destinations:
+            if destination["region"].lower() == location.lower():
+                value.append(destination)
+        return value
+
+    if name:
+        location = name.encode('utf-8')
+        for destination in model.destinations:
+            if destination["name"].lower() == location.lower():
+                value.append(destination)
+
+    return value
+
+
+def get_itinerary(tour):
+    value = []
+    for day in model.days:
+        if day["tour"].lower() == tour.lower():
+            day["landmarks"] = get_landmarks(tour, day["day"])
+            value.append(day)
+
+    return value
+
+
+def get_landmarks(tour, day):
+    value = []
+
+    for relation in model.day_landmark:
+        if relation["tour"] == tour and relation["day"] == day:
+            for landmark in model.landmarks:
+                if landmark["name"] == relation["landmark"]:
+                    value.append(landmark)
+                    break
+
+    return value
+
+
+def get_prices(tour):
+    value = []
+
+    for price in model.prices:
+        if price["tour"].lower() == tour.lower():
+            price["name"] = model.month[price["month"]]
+            value.append(price)
+
+    value.sort(key=itemgetter('month'))
+    return value
 
 
 def get_referral():
@@ -93,76 +145,32 @@ def get_referral():
     return referral, customer
 
 
-def get_regions():
-    return [{"name": "test", "summary": "test summary"},
-            {"name": "test", "summary": "test summary"}]
+def get_regions(location=None):
+    if location:
+        for region in model.regions:
+            if region["name"].lower() == location.encode('utf-8').lower():
+                return region
+    else:
+        return model.regions
 
 
-def get_tours(destination=None, featured=False):
-    matching_tours = []
+def get_tours(destination=None, featured=False, name=None):
+    value = []
     if destination:
-        for tour in tours:
-            if tour["destination_id"] == destination:
-                matching_tours.append(tour)
+        for tour in model.tours:
+            if tour["destination"].lower() == destination.lower():
+                value.append(tour)
     elif featured:
-        for tour in tours:
+        for tour in model.tours:
             if tour["featured"]:
-                matching_tours.append(tour)
+                value.append(tour)
+                break
+    elif name:
+        for tour in model.tours:
+            if tour["name"].lower() == name.lower():
+                value.append(tour)
                 break
     else:
         raise IndexError
 
-    return matching_tours
-
-
-# Unfinished or temporary functions for development
-def get_destinations(location):
-    location = location.encode('utf-8')
-    if location.lower() == "mediterranean":
-        return [{'name': "Malta", "copy": "The jewel of the Mediterranean.",
-                 'featured': True},
-                {'name': "Sicily", "copy": "Sicilian sales copy.",
-                 'featured': False},
-                {'name': "Italy", "copy": "Italian sales copy.",
-                 'featured': False},
-                {'name': "Sardinia", "copy": "Sardinian sales copy.",
-                 'featured': False},
-                {'name': "Tunisia", "copy": "Tunisian sales copy.",
-                 'featured': False}]
-    elif location.lower() == "asia":
-        return [{'name': "Bhutan", "copy": "Bhutan sales copy.",
-                 'featured': False},
-                {'name': "Nepal", "copy": "Nepal sales copy.",
-                 'featured': False}]
-
-
-def get_destination():
-    pass
-
-
-def get_tour(tour_id):
-    name = "Test Tour"
-    copy = """
-    <p>This section is for descriptions of the tour.</p>
-    <p>Key highlights, sales copy, that sort of thing.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Curabitur arcu tellus, condimentum at mauris porta, sodales placerat orci.
-    Aenean lacinia aliquam ultricies. In ultricies bibendum nisl a rhoncus.
-    Morbi tempus eros eu urna tincidunt dapibus. Nam tempor, nisl at sodales
-    adipiscing, elit arcu vehicula arcu, et vulputate nunc lorem quis dolor.
-    Ut porta auctor ultricies. Ut nec ante porttitor, aliquam est ut,
-    placerat turpis. Sed posuere orci id dui varius, id rhoncus felis varius.
-    Nam suscipit lorem eget ligula vulputate, sed interdum odio sagittis.</p>
-    """
-    return {"name": name, "copy": copy, "itinerary": get_itinerary(1)}
-
-
-def get_itinerary(key):
-    return [{"number": 1, "summary": "Day one summary",
-             "landmarks": get_landmarks(0)},
-            {"number": 2, "summary": "Day two summary",
-             "landmarks": get_landmarks(0)}]
-
-
-def get_landmarks(key):
-    return [{"name": "Landmark", "copy": "Landmark copy"} for x in range(2)]
+    return value
